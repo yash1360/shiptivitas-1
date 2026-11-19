@@ -12,42 +12,30 @@ class App extends Component {
       selectedTab: 'home',
     };
   }
-  renderShippingRequests() {
-    return (<Board />);
-  }
-
-  renderNavigation() {
-    return (<Navigation
-      onClick={(tabName) => this.changeTab(tabName)}
-      selectedTab={this.state.selectedTab}
-      />);
-  }
 
   renderTabContent() {
-    switch(this.state.selectedTab) {
+    switch (this.state.selectedTab) {
+      case 'shipping-requests':
+        return <Board />;
       case 'home':
       default:
-        return HomeTab();
-      case 'shipping-requests':
-        return this.renderShippingRequests();
+        // FIX: Use JSX <HomeTab /> instead of calling the function HomeTab()
+        return <HomeTab />; 
     }
   }
+
   render() {
     return (
       <div className="App">
-        {this.renderNavigation()}
-
+        <Navigation
+          onClick={(tabName) => this.setState({ selectedTab: tabName })}
+          selectedTab={this.state.selectedTab}
+        />
         <div className="App-body">
           {this.renderTabContent()}
         </div>
       </div>
     );
-  }
-
-  changeTab(tabName) {
-    this.setState({
-      selectedTab: tabName,
-    });
   }
 }
 
